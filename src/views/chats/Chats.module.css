@@ -134,7 +134,6 @@
 @media (max-height: 1791px) {
   .container-chats {
     overflow: auto;
-    padding: 200px 0px;
   }
 }
 
@@ -143,15 +142,23 @@
     flex-direction: column;
   }
 
+  .container-messages,
+  .form-chats {
+    border-radius: 10px;
+    margin: 5px;
+  }
+
   .container-video {
     margin-top: 200px;
   }
+
+  .container-chats {
+    padding-bottom: 200px;
+  }
 }
 
-@media (max-width: 600pxpx) {
-  .container-messages,
+@media (max-width: 887px) {
   .container-video {
-    width: 100%;
-    margin: 20px;
+    width: 90%;
   }
 }
