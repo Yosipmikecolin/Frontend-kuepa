@@ -1,26 +1,33 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
-import classes from "./Login.module.css";
+import classes from "./Register.module.css";
 import { useNavigate } from "react-router";
+import { Select } from "../../components";
 
 type Inputs = {
+  name: string;
   user: string;
+  type: string;
   password: string;
 };
 
 const schema = yup
   .object({
+    name: yup.string().required("Nombre es requerido"),
     user: yup.string().required("Usuario es requerido"),
+    type: yup.string().required("Tipo es requerido"),
     password: yup.string().required("Contraseña es requerida"),
   })
   .required();
 
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -31,15 +38,33 @@ const Login = () => {
   };
 
   const navigateRegister = () => {
-    navigate("/register");
+    navigate("/");
   };
 
   return (
-    <section className={classes["container-login"]}>
+    <section className={classes["container-register"]}>
       <div className={classes["circle-1"]} />
       <div className={classes["circle-2"]} />
-      <form className={classes["form-login"]} onSubmit={handleSubmit(onSubmit)}>
-        <h1>Iniciar sesión</h1>
+      <form
+        className={classes["form-register"]}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <h1>Registrar usuario</h1>
+
+        <div className={classes["conatiner-input"]}>
+          <label>Nombre</label>
+          <input className={classes.input} {...register("name")} />
+          <p className={classes["text-danger"]}>{errors.name?.message}</p>
+        </div>
+
+        <div className={classes["conatiner-input"]}>
+          <label>Tipo de usuario</label>
+          <Select onChange={setValue} />
+          <p className={classes["text-danger"]}>
+            {!watch("type") && errors.type?.message}
+          </p>
+        </div>
+
         <div className={classes["conatiner-input"]}>
           <label>Usuario</label>
           <input className={classes.input} {...register("user")} />
@@ -53,15 +78,15 @@ const Login = () => {
         </div>
 
         <button className={classes["button-form"]} type="submit">
-          Iniciar sesión
+          Registrar
         </button>
         <p className={classes.text}>
-          ¿No tienes cuenta?{" "}
-          <strong onClick={navigateRegister}>Crear cuenta</strong>
+          ¿Ya tienes cuenta?{" "}
+          <strong onClick={navigateRegister}>Inicia sesión</strong>
         </p>
       </form>
     </section>
   );
 };
 
-export default Login;
+export default Register;

@@ -1,0 +1,72 @@
+.container-select {
+  width: 100%;
+  height: 50px;
+  background-color: white;
+  box-sizing: border-box;
+  padding: 10px;
+  outline: none;
+  border: 1px solid #e6e8ec;
+  border-radius: 5px;
+  position: relative;
+  user-select: none;
+  cursor: pointer;
+}
+
+.list,
+.list-disabled {
+  border: 1px solid #e6e8ec;
+  top: 50px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
+  max-height: 185px;
+  overflow: auto;
+  border-radius: 5px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  background-color: white;
+  padding: 10px;
+  transition: opacity 300ms ease;
+  box-shadow: 0px 4px 44px -17px rgba(0, 0, 0, 0.75);
+}
+
+.list-disabled {
+  opacity: 0;
+  z-index: -1;
+}
+
+.value-select {
+  position: absolute;
+  left: 10px;
+}
+
+.value-no-select {
+  position: absolute;
+  left: 10px;
+  color: #9ca3af;
+}
+
+.list > span,
+.list-disabled > span {
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 200ms ease;
+}
+
+.list > span:hover,
+.list-disabled > span:hover {
+  background-color: #e0e0e0dc;
+}
+
+.list::-webkit-scrollbar,
+.list-disabled::-webkit-scrollbar {
+  display: none;
+}
+
+.selected {
+  background-color: #e0e0e0dc;
+}

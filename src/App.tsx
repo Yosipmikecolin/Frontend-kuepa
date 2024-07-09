@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router";
-import { Login } from "./views";
+import { Login, Register } from "./views";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       </Route> */}
 
       <Route path="/" element={<Login />} />
-      <Route path="/register" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
       <Route path="*" element={<h1>Noe eiste esta pagina</h1>} />
     </Routes>

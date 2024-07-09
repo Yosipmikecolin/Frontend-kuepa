@@ -1,4 +1,4 @@
-.container-login {
+.container-register {
   background-color: #f5f7f8;
   width: 100%;
   height: 100vh;
@@ -8,7 +8,7 @@
   user-select: none;
 }
 
-.form-login {
+.form-register {
   width: 500px;
   padding: 20px;
   background: rgba(255, 255, 255, 0.2);
@@ -82,8 +82,8 @@
   top: 0;
   bottom: 0;
   margin: auto;
-  bottom: 400px;
-  right: 450px;
+  bottom: 570px;
+  right: 480px;
 }
 
 .circle-2 {
@@ -107,13 +107,13 @@
     display: none;
   }
 
-  .form-login {
+  .form-register {
     margin: 20px;
   }
 }
 
 @media (max-height: 393px) {
-  .container-login {
+  .container-register {
     height: auto;
   }
 }
