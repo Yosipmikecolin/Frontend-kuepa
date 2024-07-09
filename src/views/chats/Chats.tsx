@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useAuth } from "../../hooks/useAuth";
 
 const Chat: React.FC = () => {
-  const [token, setToken] = useState<string>("your_jwt_token_here");
+  const { token } = useAuth();
   const [message, setMessage] = useState<string>("");
   const [chat, setChat] = useState<Array<{ user: string; text: string }>>([]);
   const ws = useRef<WebSocket | null>(null);

@@ -3,11 +3,7 @@ import * as yup from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import classes from "./Login.module.css";
 import { useNavigate } from "react-router";
-
-type Inputs = {
-  user: string;
-  password: string;
-};
+import { InputsLogin } from "../../types";
 
 const schema = yup
   .object({
@@ -26,7 +22,7 @@ const Login = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<InputsLogin> = (data) => {
     console.log(data);
   };
 

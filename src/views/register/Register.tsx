@@ -4,13 +4,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import classes from "./Register.module.css";
 import { useNavigate } from "react-router";
 import { Select } from "../../components";
-
-type Inputs = {
-  name: string;
-  user: string;
-  type: string;
-  password: string;
-};
+import { InputsRegister } from "../../types";
+import { registerUser } from "../../api/fetchs/user";
+import toast from "react-hot-toast";
 
 const schema = yup
   .object({
@@ -28,13 +24,20 @@ const Register = () => {
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<InputsRegister> = async (data) => {
+    try {
+      await registerUser(data);
+      reset();
+      toast.success("Usuario registrado con éxito");
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    }
   };
 
   const navigateRegister = () => {
