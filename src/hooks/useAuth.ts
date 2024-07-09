@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
 interface Props {
-  token: boolean;
-  setToken: (data: boolean) => void;
+  token?: string;
+  setToken: (data: string) => void;
 }
 
 export const useAuth = create<Props>((set) => ({
-  token: false,
-  setToken: (data: boolean) => set((_state) => ({ token: data })),
+  token: undefined,
+  setToken: (data: string) => set((_state) => ({ token: data })),
 }));
