@@ -6,11 +6,16 @@ import { Chats } from "../../types";
 import { Phone, SendHorizontal } from "lucide-react";
 
 const Chat: React.FC = () => {
-  const { token } = useAuth();
+  const { token, name } = useAuth();
   const [message, setMessage] = useState<string>("");
   const [chat, setChat] = useState<Array<Chats>>([]);
   const ws = useRef<WebSocket | null>(null);
   const [chats, setChats] = useState<Chats[]>([]);
+  const chatEndRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollToBottom = () => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   useEffect(() => {
     getAllChats();
@@ -34,6 +39,10 @@ const Chat: React.FC = () => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chats, chat]);
 
   const connectWebSocket = () => {
     ws.current = new WebSocket("ws://localhost:8080");
@@ -82,20 +91,30 @@ const Chat: React.FC = () => {
       console.warn("WebSocket is not open");
     }
   };
-
+  console.log("name", name);
+  console.log("chats", chats);
   return (
     <section className={classes["container-chats"]}>
       <div className={classes["container-video"]} />
       <div>
         <div className={classes["container-messages"]}>
           {chats.concat(chat).map((chatMessage, index) => (
-            <div key={index} className={classes["my-bubble"]}>
+            <div
+              key={index}
+              className={
+                name === chatMessage.name
+                  ? classes["my-bubble"]
+                  : classes["other-bubble"]
+              }
+            >
               <strong>{chatMessage.name}:</strong> {chatMessage.message}
             </div>
           ))}
+
+          <div ref={chatEndRef} />
         </div>
 
-        <form className={classes["form-chats"]}>
+        <div className={classes["form-chats"]}>
           <input
             type="text"
             value={message}
@@ -103,10 +122,14 @@ const Chat: React.FC = () => {
             onChange={(e) => setMessage(e.target.value)}
           />
 
-          <button className={classes["button-form"]} type="submit">
+          <button
+            className={classes["button-form"]}
+            type="submit"
+            onClick={sendMessage}
+          >
             <SendHorizontal />
           </button>
-        </form>
+        </div>
       </div>
 
       <div className={classes["footer-chats"]}>
