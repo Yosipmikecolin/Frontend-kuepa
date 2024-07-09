@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
-    const nameUser = localStorage.getItem("access_token");
+    const nameUser = localStorage.getItem("name");
     setToken(token);
     setName(nameUser);
   }, []);

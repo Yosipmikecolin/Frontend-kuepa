@@ -2,17 +2,20 @@ import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../hooks/useAuth";
 
 const Chat: React.FC = () => {
-  const { token,name } = useAuth();
-  console.log(token,name)
+  const { token } = useAuth();
   const [message, setMessage] = useState<string>("");
   const [chat, setChat] = useState<Array<{ user: string; text: string }>>([]);
   const ws = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    connectWebSocket();
+    if (ws.current) {
+      return;
+    } else {
+      connectWebSocket();
+    }
 
     return () => {
-      if (ws.current) {
+      if (ws.current && ws.current.readyState === WebSocket.OPEN) {
         ws.current.close();
       }
     };
@@ -63,7 +66,6 @@ const Chat: React.FC = () => {
     }
   };
 
-  console.log("LOS CHASTS", chat);
   return (
     <div>
       <h1>Chat</h1>
