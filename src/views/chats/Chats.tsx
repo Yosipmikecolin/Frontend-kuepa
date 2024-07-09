@@ -4,17 +4,29 @@ import classes from "./Chats.module.css";
 import { getChats } from "../../api/requests/chats";
 import { Chats } from "../../types";
 import { Phone, SendHorizontal } from "lucide-react";
+import { useNavigate } from "react-router";
 
 const Chat: React.FC = () => {
-  const { token, name } = useAuth();
+  const { token, name, setToken } = useAuth();
   const [message, setMessage] = useState<string>("");
   const [chat, setChat] = useState<Array<Chats>>([]);
   const ws = useRef<WebSocket | null>(null);
   const [chats, setChats] = useState<Chats[]>([]);
   const chatEndRef = useRef<HTMLDivElement | null>(null);
+  const navigate = useNavigate();
 
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const closeChat = () => {
+    if (ws.current) {
+      ws.current.close();
+      localStorage.removeItem("name");
+      localStorage.removeItem("access_token");
+      setToken(null);
+      navigate("/");
+    }
   };
 
   useEffect(() => {
@@ -91,8 +103,7 @@ const Chat: React.FC = () => {
       console.warn("WebSocket is not open");
     }
   };
-  console.log("name", name);
-  console.log("chats", chats);
+
   return (
     <section className={classes["container-chats"]}>
       <div className={classes["container-video"]}>
@@ -143,7 +154,7 @@ const Chat: React.FC = () => {
       </div>
 
       <div className={classes["footer-chats"]}>
-        <button className={classes["button-close"]}>
+        <button className={classes["button-close"]} onClick={closeChat}>
           <Phone size={26} />
         </button>
       </div>
