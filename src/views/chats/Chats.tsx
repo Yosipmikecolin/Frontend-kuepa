@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../hooks/useAuth";
 
 const Chat: React.FC = () => {
-  const { token } = useAuth();
+  const { token,name } = useAuth();
+  console.log(token,name)
   const [message, setMessage] = useState<string>("");
   const [chat, setChat] = useState<Array<{ user: string; text: string }>>([]);
   const ws = useRef<WebSocket | null>(null);
