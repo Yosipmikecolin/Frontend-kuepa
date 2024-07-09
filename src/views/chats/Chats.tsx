@@ -1,11 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import classes from "./Chats.module.css";
+import { getChats } from "../../api/requests/chats";
+import { Chats } from "../../types";
+import { Phone, SendHorizontal } from "lucide-react";
 
 const Chat: React.FC = () => {
   const { token } = useAuth();
   const [message, setMessage] = useState<string>("");
-  const [chat, setChat] = useState<Array<{ user: string; text: string }>>([]);
+  const [chat, setChat] = useState<Array<Chats>>([]);
   const ws = useRef<WebSocket | null>(null);
+  const [chats, setChats] = useState<Chats[]>([]);
+
+  useEffect(() => {
+    getAllChats();
+  }, []);
+
+  const getAllChats = async () => {
+    const { data } = await getChats();
+    setChats(data);
+  };
 
   useEffect(() => {
     if (ws.current) {
@@ -33,7 +47,10 @@ const Chat: React.FC = () => {
       if (data.error) {
         console.error("Error:", data.error);
       } else {
-        setChat((prevChat) => [...prevChat, data]);
+        setChat((prevChat) => [
+          ...prevChat,
+          { message: data.text, name: data.user },
+        ]);
       }
     };
 
@@ -67,22 +84,37 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Chat</h1>
+    <section className={classes["container-chats"]}>
+      <div className={classes["container-video"]} />
       <div>
-        {chat.map((chatMessage, index) => (
-          <div key={index}>
-            <strong>{chatMessage.user}:</strong> {chatMessage.text}
-          </div>
-        ))}
+        <div className={classes["container-messages"]}>
+          {chats.concat(chat).map((chatMessage, index) => (
+            <div key={index} className={classes["my-bubble"]}>
+              <strong>{chatMessage.name}:</strong> {chatMessage.message}
+            </div>
+          ))}
+        </div>
+
+        <form className={classes["form-chats"]}>
+          <input
+            type="text"
+            value={message}
+            className={classes.input}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+
+          <button className={classes["button-form"]} type="submit">
+            <SendHorizontal />
+          </button>
+        </form>
       </div>
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-      />
-      <button onClick={sendMessage}>Send</button>
-    </div>
+
+      <div className={classes["footer-chats"]}>
+        <button className={classes["button-close"]}>
+          <Phone size={26} />
+        </button>
+      </div>
+    </section>
   );
 };
 

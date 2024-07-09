@@ -9,3 +9,9 @@ export type InputsLogin = {
   user: string;
   password: string;
 };
+
+export interface Chats {
+  id?: string;
+  name: string;
+  message: string;
+}
