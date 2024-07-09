@@ -29,7 +29,6 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
-  position: relative;
 }
 
 .footer-chats {
@@ -160,5 +159,28 @@
 @media (max-width: 887px) {
   .container-video {
     width: 90%;
+  }
+}
+
+@media (max-width: 581px) {
+  .container-messages {
+    width: 350px;
+    margin: auto;
+  }
+
+  .form-chats {
+    width: 300px;
+    margin: auto;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 421px) {
+  .container-messages {
+    width: 300px;
+  }
+
+  .form-chats {
+    width: 200px;
   }
 }

@@ -22,7 +22,3 @@ Aplicación de chats en tiempo real con login
   - `types/`: Definiciones de tipos TypeScript.
   - `views/`: Páginas de la aplicación.
   - `App.tsx`: Configuración principal de la aplicación.
-
-  ## URL de produccion 🚀
-
-- [https://frontend-kuepa.vercel.app/](https://frontend-kuepa.vercel.app/)
