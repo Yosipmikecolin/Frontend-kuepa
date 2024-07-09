@@ -23,7 +23,7 @@ function App() {
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      <Route path="*" element={<h1>Noe eiste esta pagina</h1>} />
+      <Route path="*" element={<h1>Esta página no existe</h1>} />
     </Routes>
   );
 }

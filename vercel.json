@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/" },
+    { "source": "/chats", "destination": "/pokemons" },
+    { "source": "/register", "destination": "/pokemons" },
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}
