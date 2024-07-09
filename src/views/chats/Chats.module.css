@@ -36,7 +36,7 @@
   box-sizing: border-box;
   width: 100%;
   padding: 30px;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   background-color: #2f3033;
   border-top: 1px solid #423c3b;
@@ -64,13 +64,13 @@
 }
 
 .other-bubble {
-    width: 60%;
-    background-color: #C80036;
-    color: white;
-    border-radius: 5px;
-    padding: 15px;
-    margin-left: auto;
-  }
+  width: 60%;
+  background-color: #c80036;
+  color: white;
+  border-radius: 5px;
+  padding: 15px;
+  margin-left: auto;
+}
 
 .input {
   outline: none;
@@ -129,4 +129,21 @@
 
 .button-close:hover {
   background-color: #911513;
+}
+
+@media (max-height: 1791px) {
+  .container-chats {
+    overflow: auto;
+    padding: 200px 0px;
+  }
+}
+
+@media (max-width: 1451px) {
+  .container-chats {
+    flex-direction: column;
+  }
+
+  .container-video {
+    margin-top: 200px;
+  }
 }
