@@ -5,7 +5,7 @@ import classes from "./Register.module.css";
 import { useNavigate } from "react-router";
 import { Select } from "../../components";
 import { InputsRegister } from "../../types";
-import { registerUser } from "../../api/fetchs/user";
+import { registerUser } from "../../api/requests/user";
 import toast from "react-hot-toast";
 
 const schema = yup
@@ -35,6 +35,9 @@ const Register = () => {
       await registerUser(data);
       reset();
       toast.success("Usuario registrado con éxito");
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
     } catch (error: any) {
       toast.error(error.response.data.message);
     }

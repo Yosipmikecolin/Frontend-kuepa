@@ -4,6 +4,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import classes from "./Login.module.css";
 import { useNavigate } from "react-router";
 import { InputsLogin } from "../../types";
+import { loginUser } from "../../api/requests/user";
+import toast from "react-hot-toast";
+import { useAuth } from "../../hooks/useAuth";
 
 const schema = yup
   .object({
@@ -13,17 +16,33 @@ const schema = yup
   .required();
 
 const Login = () => {
+  const { setToken, setName } = useAuth();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<InputsLogin> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<InputsLogin> = async (data) => {
+    try {
+      const response = await loginUser(data);
+      const { name, access_token } = response.data;
+      setToken(access_token);
+      setName(name);
+      localStorage.setItem("access_token", access_token);
+      localStorage.setItem("name", name);
+      reset();
+      toast.success(response.data.message);
+      setTimeout(() => {
+        navigate("/chats");
+      }, 1500);
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    }
   };
 
   const navigateRegister = () => {
